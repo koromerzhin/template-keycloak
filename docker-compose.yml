@@ -1,0 +1,67 @@
+version: "3.4"
+
+volumes: 
+  database:
+
+networks:
+  proxynetwork:
+    external: true
+  net:
+    driver: overlay
+    attachable: true
+
+services:
+  phpmyadmin:
+    image: phpmyadmin:5.0.2
+    environment:
+      PMA_HOST: mariadb
+      MYSQL_ROOT_PASSWORD: example
+    depends_on:
+      - mariadb
+    networks:
+      - net
+      - proxynetwork
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.phpmyadmin-keycloak.rule=Host(`phpmyadmin-keycloak.traefik.me`)"
+        - "traefik.http.routers.phpmyadmin-keycloak-tls.tls.domains[0].main=phpmyadmin-keycloak.traefik.me"
+        - "traefik.http.routers.phpmyadmin-keycloak-tls.tls.domains[0].sans=phpmyadmin-keycloak-*.traefik.me"
+        - "traefik.http.services.phpmyadmin-keycloak.loadbalancer.server.port=80"
+  mariadb:
+    image: mariadb:10.5.8
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: password
+      TZ: Europe/Paris
+    volumes:
+      - database:/var/lib/mysql
+    deploy:
+      labels:
+        - "traefik.enable=false"
+    networks:
+      - net
+  keycloak:
+    image: quay.io/keycloak/keycloak:12.0.2
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: mariadb
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: Pa55w0rd
+    networks:
+      - net
+      - proxynetwork
+    depends_on:
+      - mariadb
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.keycloak.rule=Host(`keycloak.traefik.me`)"
+        - "traefik.http.routers.keycloak-tls.tls.domains[0].main=keycloak.traefik.me"
+        - "traefik.http.routers.keycloak-tls.tls.domains[0].sans=keycloak-*.traefik.me"
+        - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
