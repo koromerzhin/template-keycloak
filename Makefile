@@ -37,8 +37,8 @@ ifeq ($(isDocker), 0)
 endif
 
 install: node_modules ## Installation application
-	@make docker image-pull
-	@make docker deploy
+	@make docker image-pull -i
+	@make docker deploy -i
 
 logs: isdocker ## Scripts logs
 ifeq ($(COMMAND_ARGS),keycloak)
