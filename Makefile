@@ -78,7 +78,7 @@ else ifeq ($(COMMAND_ARGS),deploy)
 	@docker stack deploy -c docker-compose.yml $(STACK)
 else ifeq ($(COMMAND_ARGS),image-pull)
 	@docker image pull mariadb:10.5.8
-	@docker image pull phpmyadmin:5.0.2
+	@docker image pull phpmyadmin:5.0.4
 	@docker image pull jboss/keycloak:12.0.3
 else ifeq ($(COMMAND_ARGS),ls)
 	@docker stack services $(STACK)
