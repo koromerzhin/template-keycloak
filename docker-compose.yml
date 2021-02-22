@@ -29,7 +29,7 @@ services:
         - "traefik.http.routers.phpmyadmin-keycloak-tls.tls.domains[0].sans=phpmyadmin-keycloak-*.traefik.me"
         - "traefik.http.services.phpmyadmin-keycloak.loadbalancer.server.port=80"
   mariadb:
-    image: mariadb:10.5.8
+    image: mariadb:10.5.9
     environment:
       MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE: keycloak
