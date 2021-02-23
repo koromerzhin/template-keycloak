@@ -29,6 +29,7 @@ docker swarm
 Hosts:
 
 - keycloak.traefik.me
+- phpmyadmin-keycloak.traefik.me
 
 ## Install
 
