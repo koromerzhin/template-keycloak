@@ -12,7 +12,7 @@ networks:
 
 services:
   phpmyadmin:
-    image: phpmyadmin:5.0.4
+    image: phpmyadmin/phpmyadmin:5.1.0
     environment:
       PMA_HOST: mariadb
       MYSQL_ROOT_PASSWORD: example
