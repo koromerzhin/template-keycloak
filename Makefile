@@ -26,6 +26,11 @@ help:
 node_modules:
 	@npm install
 
+dump:
+	@mkdir dump
+
+folders: dump ## Create folder
+
 .PHONY: isdocker
 isdocker: ## Docker is launch
 ifeq ($(isDocker), 0)
@@ -33,7 +38,7 @@ ifeq ($(isDocker), 0)
 	exit 1
 endif
 
-install: node_modules ## Installation application
+install: folders node_modules ## Installation application
 	@make docker deploy -i
 
 logs: isdocker ## Scripts logs

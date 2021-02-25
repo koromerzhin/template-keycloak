@@ -1,7 +1,7 @@
 version: "3.4"
 
 volumes:
-  database:
+  mariadb_data:
 
 networks:
   proxynetwork:
@@ -37,7 +37,8 @@ services:
       MYSQL_PASSWORD: password
       TZ: Europe/Paris
     volumes:
-      - database:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
+      - ${PWD}/dump:/dump
     deploy:
       labels:
         - "traefik.enable=false"
