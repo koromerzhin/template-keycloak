@@ -45,7 +45,7 @@ services:
     networks:
       - net
   keycloak:
-    image: jboss/keycloak:13.0.0
+    image: jboss/keycloak:13.0.1
     environment:
       DB_VENDOR: mariadb
       DB_ADDR: mariadb
