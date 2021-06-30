@@ -24,7 +24,7 @@ services:
     deploy:
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.phpmyadmin-keycloak.rule=Host(`phpmyadmin-keycloak.traefik.me`)"
+        - "traefik.http.routers.phpmyadmin-keycloak.rule=HostRegexp(`phpmyadmin-keycloak.traefik.me`, `phpmyadmin-keycloak.{ip:.*}.traefik.me`)"
         - "traefik.http.routers.phpmyadmin-keycloak-tls.tls.domains[0].main=phpmyadmin-keycloak.traefik.me"
         - "traefik.http.routers.phpmyadmin-keycloak-tls.tls.domains[0].sans=phpmyadmin-keycloak-*.traefik.me"
         - "traefik.http.services.phpmyadmin-keycloak.loadbalancer.server.port=80"
@@ -62,7 +62,7 @@ services:
     deploy:
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.keycloak.rule=Host(`keycloak.traefik.me`)"
+        - "traefik.http.routers.keycloak.rule=HostRegexp(`keycloak.traefik.me`, `keycloak.{ip:.*}.traefik.me`)"
         - "traefik.http.routers.keycloak-tls.tls.domains[0].main=keycloak.traefik.me"
         - "traefik.http.routers.keycloak-tls.tls.domains[0].sans=keycloak-*.traefik.me"
         - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
